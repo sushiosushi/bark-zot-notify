@@ -32,9 +32,9 @@ export default function Home() {
           https://bark-zot-notify.vercel.app
         </a>
       </p>
-      <button onClick={() => send("zot_a.caf")}>ZOT A</button>
-      <button onClick={() => send("zot_b.caf")}>ZOT B</button>
-      <button onClick={() => send("zot_c.caf")}>ZOT C</button>
+      <button onClick={() => send("bereal.caf")}>BeReal</button>
+      <button onClick={() => send("jingle_zot_1.caf")}>ZOT (Jingle 1)</button>
+      <button onClick={() => send("jingle_zot_2.caf")}>ZOT (Jingle 2)</button>
     </div>
   );
 }
