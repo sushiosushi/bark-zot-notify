@@ -1,22 +1,22 @@
-const deviceKeys = [
-  "4b439da65a345ee95d0bbbccadcdc3a819ddd7ed37cfd86ef080057cdfd6aa8e",
-];
+const deviceKeys = ["49gJgkjqz3XWiMTF7ZyguP"];
 
 const send = async (sound) => {
-  const title = "ZOT通知";
-  const body = `通知音: ${sound}`;
-  const soundUrl = `https://bark-zot-notify.vercel.app/sound/${sound}`;
-
   try {
     await Promise.all(
       deviceKeys.map((key) => {
-        const url = `https://bark-zot-server.up.railway.app/${key}?title=${encodeURIComponent(
-          title
-        )}&body=${encodeURIComponent(body)}&sound=${sound}`;
-        return fetch(url).catch((error) => {
-          console.error(`Failed to fetch for key ${key}:`, error);
-          throw error;
-        });
+        return fetch(
+          `/api/send?sound=${encodeURIComponent(
+            sound
+          )}&key=${encodeURIComponent(key)}`
+        )
+          .then((res) => {
+            if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+            return res.json();
+          })
+          .catch((error) => {
+            console.error(`通知失敗: ${key}`, error);
+            throw error;
+          });
       })
     );
   } catch (error) {
@@ -40,9 +40,10 @@ export default function Home() {
           https://bark-zot-notify.vercel.app
         </a>
       </p>
-      <button onClick={() => send("bereal.caf")}>BeReal</button>
-      <button onClick={() => send("jingle_zot_1.caf")}>ZOT (Jingle 1)</button>
-      <button onClick={() => send("jingle_zot_2.caf")}>ZOT (Jingle 2)</button>
+      <button onClick={() => send("bereal")}>BeReal</button>
+      <button onClick={() => send("zot_v1.caf")}>ZOT v1</button>
+      <button onClick={() => send("zot_v1_voice.caf")}>ZOT v1 +voice</button>
+      <button onClick={() => send("minuet")}>Default minuet</button>
     </div>
   );
 }
