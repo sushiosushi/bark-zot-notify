@@ -7,14 +7,22 @@ const send = async (sound) => {
   const body = `通知音: ${sound}`;
   const soundUrl = `https://bark-zot-notify.vercel.app/sound/${sound}`;
 
-  await Promise.all(
-    deviceKeys.map((key) => {
-      const url = `https://api.day.app/${key}?title=${encodeURIComponent(
-        title
-      )}&body=${encodeURIComponent(body)}&sound=${sound}`;
-      return fetch(url);
-    })
-  );
+  try {
+    await Promise.all(
+      deviceKeys.map((key) => {
+        const url = `https://bark-zot-server.up.railway.app/${key}?title=${encodeURIComponent(
+          title
+        )}&body=${encodeURIComponent(body)}&sound=${sound}`;
+        return fetch(url).catch((error) => {
+          console.error(`Failed to fetch for key ${key}:`, error);
+          throw error;
+        });
+      })
+    );
+  } catch (error) {
+    console.error("Error sending notification:", error);
+    alert("通知の送信に失敗しました。詳細はコンソールをご確認ください。");
+  }
 };
 
 export default function Home() {
