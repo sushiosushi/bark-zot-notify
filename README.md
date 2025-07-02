@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+# ZOT テスト通知システム
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+このプロジェクトは、ZOT テスト通知音を一斉に送信するためのシステムです。以下のリンクから通知音を選択して送信できます。
 
-## Available Scripts
+[ZOT テスト通知システム](https://bark-zot-notify.vercel.app/)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 初期設定
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. 以下のアプリをインストールしてください。
+   [Bark Custom Notifications](https://apps.apple.com/us/app/bark-custom-notifications/id1403753865)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. アプリを開き、右上の「+」をクリック。
+3. Server Address に `https://bark-zot-server.up.railway.app` を入力。
+4. 右上のクラウドアイコンをクリック。
+5. `bark-zot-server.up.railway.app` の下に表示される Key を確認してください。
+   - Key が `49gJgkjqz3XWiMTF7ZyguP` でない場合は、`pages/index.jsx` の `deviceKeys` の値をその Key に変更してください。
+   - 変更後、`npm run dev` を実行するか、main ブランチにプッシュしてください。
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 新しい通知音の追加
 
-### `npm run build`
+1. アプリ内のホーム画面で、青文字のリンク `Click here to view all available sounds` をクリック。
+2. 表示されたページで、カスタムの `.caf` ファイルをアップロード。
+3. `pages/index.jsx` の `send` 関数に以下のように音声ファイル名を追加してください。
+   ```javascript
+   send("音声ファイル名.caf");
+   ```
+   - 変更後、`npm run dev` を実行するか、main ブランチにプッシュしてください。
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 既存の通知音の変更
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. アプリ内のホーム画面で、青文字のリンク `Click here to view all available sounds` をクリック。
+2. 変更したい音声ファイルを左スワイプして削除。
+3. 新しい音声ファイルをアップロードし、必要に応じてコードを更新してください。
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 注意事項
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 開発環境では `npm run dev` を使用してください。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
