@@ -15,9 +15,12 @@
 2. アプリを開き、右上の「+」をクリック。
 3. Server Address で QR を読みとる
    （または `https://bark-zot-server.up.railway.app` を入力）
-   ![qr-code-2](https://github.com/user-attachments/assets/e68a1631-6113-4d5f-8cfe-a2d7a809cb41)
-4. 右上のクラウドアイコンをクリック。
-5. `bark-zot-server.up.railway.app` の下に表示される Key を確認してください。
+
+![qr-code-4](https://github.com/user-attachments/assets/20c33400-aff5-42eb-b087-0c565302baa3)
+
+   
+5. 右上のクラウドアイコンをクリック。
+6. `bark-zot-server.up.railway.app` の下に表示される Key を確認してください。
    その値を管理者に伝えてください。          
    - （管理者は`pages/index.jsx` の `deviceKeys` の値をその Key に追加します）
    - （管理者は`npm run dev` を実行するか、main ブランチにプッシュしてください）
