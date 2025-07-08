@@ -44,6 +44,12 @@ export default function Home() {
       <button onClick={() => send("zot_v1.caf")}>ZOT v1</button>
       <button onClick={() => send("zot_v1_voice.caf")}>ZOT v1 +voice</button>
       <button onClick={() => send("minuet")}>Default minuet</button>
+      <button onClick={() => send("zot_v2_01.caf")}>ZOT v2 01</button>
+      <button onClick={() => send("zot_v2_02.caf")}>ZOT v2 02</button>
+      <button onClick={() => send("zot_v2_03.caf")}>ZOT v2 03</button>
+      <button onClick={() => send("zot_v2_04.caf")}>ZOT v2 04</button>
+      <button onClick={() => send("zot_v2_05.caf")}>ZOT v2 05</button>
+      <button onClick={() => send("zot_v2_06.caf")}>ZOT v2 06</button>
     </div>
   );
 }
