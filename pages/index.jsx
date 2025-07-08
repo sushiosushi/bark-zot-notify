@@ -117,7 +117,7 @@ export default function Home() {
             https://bark-zot-notify.vercel.app
           </a>
         </p>
-
+        <h2>まずはデバイスキーを登録</h2>
         <div style={{ marginBottom: "1rem" }}>
           <input
             type="text"
@@ -150,7 +150,8 @@ export default function Home() {
             </div>
           ))}
         </div>
-
+        <h2>鳴らしてみる</h2>
+        <p>※ 通知が届くまでに数秒かかる場合があります。</p>
         <button onClick={() => send("bereal")}>BeReal</button>
         <button onClick={() => send("zot_v1.caf")}>ZOT v1</button>
         <button onClick={() => send("zot_v1_voice.caf")}>ZOT v1 +voice</button>
