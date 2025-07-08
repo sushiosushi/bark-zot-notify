@@ -20,11 +20,8 @@ ZOT 通知音を一斉通知できるシステム
 
 4.  アプリの右上の「☁️」アイコンをクリック。
 5.  `bark-zot-server.up.railway.app` をタップ、一番上のボタンをタップ（`Copy Address and Key`）
-6.  その値を開発者 @soshi に伝える。
-
-    ```
-    ※ 開発者は　`index.jsx` の `deviceKeys` の値に追加して反映すること
-    ```
+6.  その値をウェブアプリに登録
+    [🔔 ウェブアプリに登録する | bark-zot-notify.vercel.app](https://bark-zot-notify.vercel.app/)
 
 ---
 

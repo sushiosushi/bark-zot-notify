@@ -52,6 +52,28 @@ export default function Home() {
     }
   };
 
+  const removeDeviceKey = async (keyToRemove) => {
+    try {
+      const response = await fetch("/api/removeDeviceKey", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ key: keyToRemove }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to remove key");
+      }
+
+      setDeviceKeys(deviceKeys.filter((key) => key !== keyToRemove));
+      alert("デバイスキーが削除されました。");
+    } catch (error) {
+      console.error("Error removing device key:", error);
+      alert("デバイスキーの削除に失敗しました。");
+    }
+  };
+
   const send = async (sound) => {
     try {
       await Promise.all(
@@ -81,47 +103,65 @@ export default function Home() {
   };
 
   return (
-    <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-      <h1>ZOT 一斉通知システム</h1>
-      <p>各ボタンを押すと、対象の通知音が全員に送信されます。</p>
-      <p>
-        公開URL:{" "}
-        <a
-          href="https://bark-zot-notify.vercel.app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          https://bark-zot-notify.vercel.app
-        </a>
-      </p>
+    <div className="container">
+      <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
+        <h1>ZOT 一斉通知システム</h1>
+        <p>各ボタンを押すと、対象の通知音が全員に送信されます。</p>
+        <p>
+          公開URL:{" "}
+          <a
+            href="https://bark-zot-notify.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://bark-zot-notify.vercel.app
+          </a>
+        </p>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <input
-          type="text"
-          value={newKey}
-          onChange={(e) => setNewKey(e.target.value)}
-          placeholder="デバイスキーを入力"
-          style={{ marginRight: "0.5rem" }}
-        />
-        <button onClick={addDeviceKey}>デバイスキーを登録</button>
+        <div style={{ marginBottom: "1rem" }}>
+          <input
+            type="text"
+            value={newKey}
+            onChange={(e) => setNewKey(e.target.value)}
+            placeholder="デバイスキーを入力"
+            style={{ marginRight: "0.5rem" }}
+          />
+          <button onClick={addDeviceKey}>デバイスキーを登録</button>
+        </div>
+
+        <div>
+          {deviceKeys.map((key, index) => (
+            <div key={index} style={{ display: "flex", alignItems: "center" }}>
+              <p style={{ marginRight: "1rem" }}>登録済みキー: {key}</p>
+              <button
+                onClick={() => removeDeviceKey(key)}
+                style={{
+                  marginLeft: "0.5rem",
+                  backgroundColor: "red",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "0.25rem",
+                  padding: "0.5rem 1rem",
+                  cursor: "pointer",
+                }}
+              >
+                削除
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <button onClick={() => send("bereal")}>BeReal</button>
+        <button onClick={() => send("zot_v1.caf")}>ZOT v1</button>
+        <button onClick={() => send("zot_v1_voice.caf")}>ZOT v1 +voice</button>
+        <button onClick={() => send("minuet")}>Default minuet</button>
+        <button onClick={() => send("zot_v2_01.caf")}>ZOT v2 01</button>
+        <button onClick={() => send("zot_v2_02.caf")}>ZOT v2 02</button>
+        <button onClick={() => send("zot_v2_03.caf")}>ZOT v2 03</button>
+        <button onClick={() => send("zot_v2_04.caf")}>ZOT v2 04</button>
+        <button onClick={() => send("zot_v2_05.caf")}>ZOT v2 05</button>
+        <button onClick={() => send("zot_v2_06.caf")}>ZOT v2 06</button>
       </div>
-
-      <div>
-        {deviceKeys.map((key, index) => (
-          <p key={index}>登録済みキー: {key}</p>
-        ))}
-      </div>
-
-      <button onClick={() => send("bereal")}>BeReal</button>
-      <button onClick={() => send("zot_v1.caf")}>ZOT v1</button>
-      <button onClick={() => send("zot_v1_voice.caf")}>ZOT v1 +voice</button>
-      <button onClick={() => send("minuet")}>Default minuet</button>
-      <button onClick={() => send("zot_v2_01.caf")}>ZOT v2 01</button>
-      <button onClick={() => send("zot_v2_02.caf")}>ZOT v2 02</button>
-      <button onClick={() => send("zot_v2_03.caf")}>ZOT v2 03</button>
-      <button onClick={() => send("zot_v2_04.caf")}>ZOT v2 04</button>
-      <button onClick={() => send("zot_v2_05.caf")}>ZOT v2 05</button>
-      <button onClick={() => send("zot_v2_06.caf")}>ZOT v2 06</button>
     </div>
   );
 }
