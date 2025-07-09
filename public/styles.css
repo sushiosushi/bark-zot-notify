@@ -45,3 +45,38 @@ button:disabled {
   max-width: 600px;
   margin: 0 auto;
 }
+
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  z-index: 1000;
+  text-align: center;
+}
+
+.toast {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  transform: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  z-index: 1000;
+  text-align: center;
+}
+
+.toast.success {
+  background-color: #4caf50;
+}
+
+.toast.error {
+  background-color: #f44336;
+}

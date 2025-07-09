@@ -3,9 +3,19 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [deviceKeys, setDeviceKeys] = useState([""]);
   const [newKey, setNewKey] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState(null);
+  const [loadingMessage, setLoadingMessage] = useState("データ取得中...");
+
+  const showToast = (message, type = "success") => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
   useEffect(() => {
     const fetchDeviceKeys = async () => {
+      setLoading(true);
+      setLoadingMessage("データ取得中...");
       try {
         const response = await fetch("/api/getDeviceKeys");
         if (!response.ok) {
@@ -13,8 +23,12 @@ export default function Home() {
         }
         const data = await response.json();
         setDeviceKeys(data.keys);
+        showToast("デバイスキーが正常に取得されました。");
       } catch (error) {
         console.error("Error fetching device keys:", error);
+        showToast("デバイスキーの取得に失敗しました。", "error");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -23,6 +37,8 @@ export default function Home() {
 
   const addDeviceKey = async () => {
     if (newKey.trim() !== "") {
+      setLoadingMessage("登録中...");
+      setLoading(true);
       // Extract the key from the URL if it matches the pattern
       const match = newKey.trim().match(/https?:\/\/[^/]+\/([^/]+)\/?/);
       const extractedKey = match ? match[1] : newKey.trim();
@@ -42,17 +58,21 @@ export default function Home() {
 
         setDeviceKeys([...deviceKeys, extractedKey]);
         setNewKey("");
-        alert("デバイスキーが登録されました。");
+        showToast("デバイスキーが登録されました。");
       } catch (error) {
         console.error("Error saving device key:", error);
-        alert("デバイスキーの保存に失敗しました。");
+        showToast("デバイスキーの保存に失敗しました。", "error");
+      } finally {
+        setLoading(false);
       }
     } else {
-      alert("デバイスキーを入力してください。");
+      showToast("デバイスキーを入力してください。", "error");
     }
   };
 
   const removeDeviceKey = async (keyToRemove) => {
+    setLoadingMessage("削除中...");
+    setLoading(true);
     try {
       const response = await fetch("/api/removeDeviceKey", {
         method: "POST",
@@ -67,14 +87,18 @@ export default function Home() {
       }
 
       setDeviceKeys(deviceKeys.filter((key) => key !== keyToRemove));
-      alert("デバイスキーが削除されました。");
+      showToast("デバイスキーが削除されました。");
     } catch (error) {
       console.error("Error removing device key:", error);
-      alert("デバイスキーの削除に失敗しました。");
+      showToast("デバイスキーの削除に失敗しました。", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
   const send = async (sound) => {
+    setLoadingMessage("通知送信中...");
+    setLoading(true);
     try {
       await Promise.all(
         deviceKeys.map((key) => {
@@ -96,14 +120,19 @@ export default function Home() {
             });
         })
       );
+      showToast("通知が送信されました。");
     } catch (error) {
       console.error("Error sending notification:", error);
-      alert("通知の送信に失敗しました。詳細はコンソールをご確認ください。");
+      showToast("通知の送信に失敗しました。", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="container">
+      {loading && <div className="loading">{loadingMessage}</div>}
+      {toast && <div className={`toast ${toast.type}`}>{toast.message}</div>}
       <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
         <h1>ZOT 一斉通知システム</h1>
         <p>各ボタンを押すと、対象の通知音が全員に送信されます。</p>
@@ -117,16 +146,16 @@ export default function Home() {
             https://bark-zot-notify.vercel.app
           </a>
         </p>
-        <h2>まずはデバイスキーを登録</h2>
+        <h2>まずは Address and Key を登録</h2>
         <div style={{ marginBottom: "1rem" }}>
           <input
             type="text"
             value={newKey}
             onChange={(e) => setNewKey(e.target.value)}
-            placeholder="デバイスキーを入力"
+            placeholder="Address and Keyを入力"
             style={{ marginRight: "0.5rem" }}
           />
-          <button onClick={addDeviceKey}>デバイスキーを登録</button>
+          <button onClick={addDeviceKey}>登録</button>
         </div>
 
         <div>
